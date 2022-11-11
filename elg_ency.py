@@ -1,4 +1,5 @@
 import random
+import os
 from math import pow
  
 a = random.randint(2, 10)
@@ -50,8 +51,6 @@ def encrypt(msg, q, h, g):
 
 def main():
  
-    msg = input("Enter the message :- ")
-
     fp=open("elgamal_keys.txt","r")
 
     q = int(fp.readline())
@@ -59,17 +58,25 @@ def main():
 
     fp.close()
 
-    key = gen_key(q)# Private key for receiver
-
-    print("Private Key is ",key)
+    key = 26483633026457924888110156389934014358938232972367
 
     h = power(g, key, q)
- 
-    en_msg, p = encrypt(msg, q, h, g)
+
+    
+    fp=open("rsa_key.txt","r")
+    msg1=fp.readline() #n
+    msg2=fp.readline() #e
+    fp.close()
+    os.remove("rsa_key.txt")
+
+    en_msg1,p1=encrypt(msg1, q, h, g)
+    en_msg2,p2=encrypt(msg2, q, h, g)
 
     fp=open("elgamal_keys.txt","a")
 
-    fp.write("{0}\n{1}\n".format(str(p),str(en_msg)[1:-1]))
+    fp.write("{0}\n{1}\n{2}\n{3}\n".format(str(p1),str(en_msg1)[1:-1],str(p2),str(en_msg2)[1:-1]))
+
+    fp.close()
 
 if __name__ == '__main__':
     main()

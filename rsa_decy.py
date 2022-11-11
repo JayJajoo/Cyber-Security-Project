@@ -1,27 +1,28 @@
 import os
 import codecs
+import elg_decy as eleDecy
 def decryption(C,d,n):
-    P = []
+    msg=""
     for i in C:
-        P.append(chr((i**d)%n))
-    return P
+        msg+=str(chr((int(i)**d)%n))
+    return msg
 def main():
     FileName = 'Message.txt'
     fd = codecs.open(FileName,'r','utf-8')
-    SampleData = fd.read()
+    SampleData = list(map(int,fd.read().split(' ')))
     fd.close()
-    print("Sample data is ",*SampleData)
-    FileName = 'rsa_key.txt'
-    fd = open(FileName)
-    n = int(fd.readline())
-    fd.close()
-    C = []
-    for i in SampleData:
-        C.append(ord(i))
-    print(C)
+    print("Fetched Encrypted data is ",SampleData)
+    
+    lst=eleDecy.main()
+    n=int(lst[0])
+
     d = int(input("Enter Private Key : "))
-    P = decryption(C,d,n)
-    print("msg : ",''.join(P))
+    
+    P = decryption(SampleData,d,n)
+    print("Decrypted message is ",P)
+
+    os.remove("elgamal_keys.txt")
+    os.remove("Message.txt")
 
 if __name__ == '__main__':
     main()

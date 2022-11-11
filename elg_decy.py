@@ -46,16 +46,19 @@ def main():
     fp=open("elgamal_keys.txt","r")
     q=int(fp.readline())
     g=int(fp.readline())
-    p=int(fp.readline())
-    key=int(input("Enter your private key :- "))
-    en_msg=list(map(int,fp.readline().split(',')))
-    dr_msg = decrypt(en_msg, p, key, q)
-    dmsg = ''.join(dr_msg)
-    print("Decrypted Message :", dmsg);
-
+    key=26483633026457924888110156389934014358938232972367
+    p1=int(fp.readline())
+    en_msg1=list(map(int,fp.readline().split(',')))[:-1]
+    p2=int(fp.readline())
+    en_msg2=list(map(int,fp.readline().split(',')))
+    dr_msg1 = decrypt(en_msg1, p1, key, q)
+    dr_msg2 = decrypt(en_msg2, p2, key, q)
+    dmsg1 = ''.join(dr_msg1)
+    dmsg2 = ''.join(dr_msg2)
+    print("Decrypted n :",dmsg1);
+    print("Decrypted e:",dmsg2);
     fp.close()
-
-    fp=open("elgamal_keys.txt","a")
+    return [dmsg1,dmsg2]
  
 if __name__ == '__main__':
     main()
